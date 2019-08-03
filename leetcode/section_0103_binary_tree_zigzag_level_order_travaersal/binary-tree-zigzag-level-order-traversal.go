@@ -1,14 +1,12 @@
 package main
 
-import "fmt"
-
 type TreeNode struct {
 	Val int
 	Left *TreeNode
 	Right *TreeNode
 }
 
-func zigzagLevelOrder(root *TreeNode) [][]int {
+func ZigzagLevelOrder(root *TreeNode) [][]int {
 	rst := make([][]int, 0)
 	if root == nil {
 		return rst
@@ -29,19 +27,16 @@ func zigzagLevelOrder(root *TreeNode) [][]int {
 			q = append(q, q[i].Right)
 			l = append(l, l[i]+1)
 		}
-		if l[i] == currLevel {
-			// 如果与当前处理深度一致
-			buf = append(buf, q[i].Val)
-		} else {
+		if l[i] != currLevel {
 			// if not equals currLevel
 			if currLevel % 2 == 0 {
 				buf = reverse(buf)
 			}
 			rst = append(rst, buf)
 			buf = make([]int, 0)
-			buf = append(buf, q[i].Val)
 			currLevel ++
 		}
+		buf = append(buf, q[i].Val)
 	}
 	if len(buf) != 0 {
 		// if buf is not empty
@@ -61,15 +56,4 @@ func reverse(a1 []int) (a2 []int) {
 	return a2
 }
 
-func main() {
-	root := &TreeNode{
-		Val:1,
-		Left:&TreeNode{
-			Val:2,
-		},
-		Right:&TreeNode{
-			Val:3,
-		},
-	}
-	fmt.Println(zigzagLevelOrder(root))
-}
+
